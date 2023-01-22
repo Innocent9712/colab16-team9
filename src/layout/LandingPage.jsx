@@ -32,7 +32,7 @@ const LandingPage = () => {
             <h3 className="text-lg text-center text-black">To better serve you,<br/>please enter your location zipcode</h3>
             <div className='relative rounded-full drop-shadow-primary border-black border-2 p-2 mt-8 bg-white flex justify-end max-w-xs'>
               <img className="absolute w-[2.7em] left-0 top-[-25px]" src={location_pin} alt="location pin" />
-              <input className='w-9/12 outline-none bg-transparent' type="number" ref={inputRef}  onChange = {handleChange} placeholder="5 digit ZIPCODE"/>
+              <input className='w-9/12 outline-none bg-transparent text-black' type="number" ref={inputRef}  onChange = {handleChange} placeholder="5 digit ZIPCODE"/>
             </div>
             <button className={`mt-2 bg-[#0377F9] text-white ${!showBtn && "invisible" }`}>Next</button>
           </div>
