@@ -4,11 +4,13 @@ import mascot from "../assets/logo_mascot_with_gear.png"
 import location_pin from "../assets/location_pin.svg"
 import bg_pic_auto from "../assets/bg_pic_auto.png"
 import Footer from '../components/Footer'
+import { useNavigate } from 'react-router'
 // import "../styles/Landing.css"
 
 const LandingPage = () => {
   const [showBtn, setShowBtn] = useState(false)
   const inputRef = useRef()
+  const navigate = useNavigate()
 
   const handleChange = () => {
     if (inputRef.current.value.length === 5) {
@@ -17,6 +19,13 @@ const LandingPage = () => {
       setShowBtn(false)
     }
   }
+
+  const handleSubmit = () => {
+    // console.log(isNaN(inputRef.current.value))
+    navigate(`/${inputRef.current.value}/car`)
+
+  }
+
   return (
     <div>
       <section className="hero bg-[#EFF7FF] px-2 py-4">
@@ -34,7 +43,7 @@ const LandingPage = () => {
               <img className="absolute w-[2.7em] left-0 top-[-25px]" src={location_pin} alt="location pin" />
               <input className='w-9/12 outline-none bg-transparent text-black' type="number" ref={inputRef}  onChange = {handleChange} placeholder="5 digit ZIPCODE"/>
             </div>
-            <button className={`mt-2 bg-[#0377F9] text-white ${!showBtn && "invisible" }`}>Next</button>
+            <button className={`mt-2 bg-[#0377F9] text-white ${!showBtn && "invisible" }`} onClick={handleSubmit}>Next</button>
           </div>
         </div>
       </section>

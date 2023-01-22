@@ -6,7 +6,7 @@ import logo from "../assets/logo_text.svg"
 const Header = () => {
   return (
     <header className={`flex`}>
-      <div  className="w-6/12 max-w-md">
+      <div  className="w-6/12 max-w-xs">
         <img src={logo} alt="logo" />
       </div>
     </header>
