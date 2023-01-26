@@ -1,14 +1,17 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router'
 import BodyBg from '../components/BodyBg'
 import Select from "react-select"
+import GeneralBtn from '../components/GeneralBtn'
+import axios from 'axios'
 
-const CustomSelect = ({options, defaultValue, onChange}) => {
+const CustomSelect = ({options, defaultValue, handleChange, disabledState = false}) => {
     return (
         <Select
         options={options}
         defaultValue={defaultValue}
-        onChange={(selectedOption)=> console.log(selectedOption)} 
+        onChange={handleChange} 
+        isDisabled={disabledState}
         styles={{
             container: (baseStyles, state) => ({
                 ...baseStyles,
@@ -20,14 +23,16 @@ const CustomSelect = ({options, defaultValue, onChange}) => {
             borderColor: state.isFocused ? '#FFC43A' : '#141313',
             borderRadius: '2rem',
             borderWidth: '3px',
-            padding: '3px'
+            padding: '3px',
+            backgroundColor: '#D9D9D9',
             }),
             input: (baseStyles, state) => ({
             ...baseStyles,
             outline: 'none',
                 ':focus': {
                     outline: 'none'
-                }
+                },
+            color: '#141413'
             }),
 
             option: (baseStyles, state) => ({
@@ -55,58 +60,163 @@ const CustomSelect = ({options, defaultValue, onChange}) => {
     )
 }
 
+const BASE_URL = 'http://drcarquotes01-001-site1.btempurl.com'
 
 const CarPage = () => {
-    const [cars, setCars] = useState({selected: null, cars: [
-        {value: "car1", label: 'car 1'},
-        {value: "car2", label: 'car 2'},
-        {value: "car3", label: 'car 3'},
-    ]})
+    const [data, setData] = useState(undefined)
+    const [make, setMake] = useState({selected: {}, cars: []})
+    const [model, setModel] = useState({selected: {}, cars: []})
+    const [year, setYear] = useState({selected: {}, cars: []})
+    const [displayImg, setDisplayImg] = useState(null)
+
     const { zipcode } = useParams()
-    console.log(zipcode)
     const options = [
         { value: 'chocolate', label: 'Chocolate' },
         { value: 'strawberry', label: 'Strawberry' },
         { value: 'vanilla', label: 'Vanilla' }
     ]
 
+    const getCarsOutofData = (carsArr) => {
+        const makes = []
+        const maker = []
+        console.log(carsArr)
+        if (carsArr !== undefined) {
+            for (const car of carsArr) {
+                if (makes.indexOf(car.make) == -1) {
+                    makes.push(car.make)
+                }
+            }
+            for (const make of makes) {
+                maker.push({value: make, label: make})
+            }
+        }
+
+        console.log(makes)
+        console.log(maker)
+        return maker
+    }
+
+    const getCars = async () => {
+        const cars = await axios.get(`${BASE_URL}/api/cars/get-all-cars`)
+        setData(cars.data)
+        setMake(() => {
+            const res = getCarsOutofData(cars.data)
+            // console.log("res", res)
+            return {
+                selected: res[0],
+                cars: res
+            }
+
+        })
+    }
+
+    const getModelOptions = (carsArr) => {
+        const selectedMake = make.selected.value
+        const models = []
+        console.log(carsArr)
+        if (carsArr !== undefined) {
+
+            for (const car of carsArr) {
+                if (selectedMake === car.make) {
+                    models.push({value: car.model, label: car.model})
+                }
+            }
+        }
+        console.log("models", models)
+        setModel({selected: models[0], cars: models})
+    }
+
+    const getYearOptions = (carsArr) => {
+        const selectedModel = model.selected?.value
+        const years = []
+        console.log(carsArr)
+        if (carsArr !== undefined) {
+
+            for (const car of carsArr) {
+                if (selectedModel === car.model) {
+                    years.push({value: car.year, label: car.year})
+                }
+            }
+        }
+        console.log("year", years)
+        setYear({selected: years[0], cars: years})
+    }
+    useEffect(() => {
+        getCars()
+    }, [])
+    useEffect(() => {
+        setDisplayImg(data?.find(car => car.make === make.selected?.value && car.model === model.selected?.value && car.year === year.selected?.value)?.imageUrl)
+    }, [year.selected])
+
+    console.log("display", displayImg)
+    console.log("data", data)
+    useEffect(() => {
+        getModelOptions(data)
+    }, [make.selected, data])
+    useEffect(() => {
+        getYearOptions(data)
+    }, [model.selected, data])
+    
+
+
+
   return (
     <BodyBg>
-        <div className='flex flex-col items-center gap-4'>
-            <h1 className='text-3xl text-black font-Itim'>Select Car</h1>
-            <ul className='flex flex-col w-full items-center md:flex-row max-w-lg gap-4'>
-                <li className='w-10/12 mx-auto'>
-                    <p className='ml-8 text-black font-medium text-lg mb-2'>make</p>
-                    <div>
-                        <div>
-                            <CustomSelect options={cars.cars} defaultValue={cars.cars[0]} onChange={(selectedOption)=> console.log(selectedOption)} />
-                        </div>
-                    </div>
-                </li>
-                <li className='w-10/12 mx-auto'>
-                    <p className='ml-8 text-black font-medium text-lg mb-2'>model</p>
-                    <div>
-                        <div>
-                            <CustomSelect options={cars.cars} defaultValue={cars.cars[0]} onChange={(selectedOption)=> console.log(selectedOption)} />
-                        </div>
-                    </div>
-                </li>
-                <li className='w-10/12 mx-auto'>
-                    <p className='ml-8 text-black font-medium text-lg mb-2'>year</p>
-                    <div>
-                        <div>
-                            <CustomSelect options={cars.cars} defaultValue={cars.cars[0]} onChange={(selectedOption)=> console.log(selectedOption)} />
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <div className='relative min-h-[400px] md:min-h-[500px] lg:min-h-[600px] w-full'>
-                {/* <div className='absolute left-[-5px] top-[60px] md:top-[6em] z-10 w-[90%] md:w-[27em] lg:w-[30%]'> */}
-                <div className='absolute left-[-5px] bottom-[10px] md:bottom-[2em] lg:bottom-[-1.5em] z-10 w-[90%] md:w-[27em] lg:w-[32%]'>
-                    <img className='w-[100%]' src="https://i.ibb.co/N1D1r1h/bmw.png" alt="car img" />
+        <div className='relative min-h-[70vh]'>
+            <div className='flex flex-wrap items-center content-start gap-5 pb-12  z-10 max-w-[1400px] mx-auto mt-[2%]'>
+                <div className='basis-4/4 lg:basis-[35%] z-10'>
+                    <h1 className='text-xl text-black font-Itim'>We kindly ask you to take a moment to provide us with the make, model and year of your car.</h1>
+                    <ul className='flex flex-col w-full items-center  max-w-lg gap-4'>
+                        <li className='w-10/12 mx-auto'>
+                            <p className='ml-8 text-black font-medium text-lg mb-2'>make</p>
+                            <div>
+                                <div>
+                                    {
+                                        make.cars.length > 0 &&
+                                    <CustomSelect options={make.cars} defaultValue={make.selected} 
+                                        handleChange={(selectedOption)=> setMake((prevState) => ({...prevState, selected: selectedOption}))} />
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                        <li className='w-10/12 mx-auto'>
+                            <p className='ml-8 text-black font-medium text-lg mb-2'>model</p>
+                            <div>
+                                <div>
+                                    {
+                                        model.cars.length > 0 &&
+                                    <CustomSelect options={model.cars} defaultValue={model.selected} handleChange={(selectedOption)=> console.log(selectedOption)} />
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                        <li className='w-10/12 mx-auto'>
+                            <p className='ml-8 text-black font-medium text-lg mb-2'>year</p>
+                            <div>
+                                <div>
+                                    {
+                                        year.cars.length > 0 &&
+                                    <CustomSelect options={year.cars} defaultValue={year.selected} handleChange={(selectedOption)=> console.log(selectedOption)} />
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div className='min-h-[100px] md:min-h-[150px] bg-gradient-to-b from-[#d9e1e9] to-[#a5a2a2] w-full absolute bottom-0'></div>
+                <div className='lg:order-last basis-[100%] z-10 flex justify-center'>
+                    <GeneralBtn showBtn={true} handleClick={()=> {}} />
+                </div>
+                <div className=' w-full z-10 lg:basis-[63%]'>
+                    {/* <div className='absolute left-[-5px] top-[60px] md:top-[6em] z-10 w-[90%] md:w-[27em] lg:w-[30%]'> */}
+                    <div className='w-[90%] max-w-[900px] mx-auto'>
+                        {
+                            displayImg &&
+                            <img className='w-[100%] max-h-[500px]' src={displayImg} alt="car img" />
+                        }
+                    </div>
+                </div>
             </div>
+            <div className='min-h-[200px] md:min-h-[350px] bg-gradient-to-b from-[#d9e1e9] to-[#a5a2a2] w-full absolute bottom-0'></div>
         </div>
     </BodyBg>
   )

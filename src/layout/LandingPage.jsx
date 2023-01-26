@@ -5,6 +5,7 @@ import location_pin from "../assets/location_pin.svg"
 import bg_pic_auto from "../assets/bg_pic_auto.png"
 import Footer from '../components/Footer'
 import { useNavigate } from 'react-router'
+import GeneralBtn from '../components/GeneralBtn'
 // import "../styles/Landing.css"
 
 const LandingPage = () => {
@@ -43,7 +44,8 @@ const LandingPage = () => {
               <img className="absolute w-[2.7em] left-0 top-[-25px]" src={location_pin} alt="location pin" />
               <input className='w-9/12 outline-none bg-transparent text-black' type="number" ref={inputRef}  onChange = {handleChange} placeholder="5 digit ZIPCODE"/>
             </div>
-            <button className={`mt-6 px-8 font-Inter text-lg bg-[#D9D9D9] text-black rounded-full ${!showBtn && "invisible" } shadow-[0px_4px_8px_1px_rgba(0,0,0,0.25)] focus:bg-[#FFBA20] lg:hover:bg-[#FFBA20]`} onClick={handleSubmit}>Enter</button>
+            {/* <button className={`mt-6 px-8 font-Inter text-lg bg-[#D9D9D9] text-black rounded-full ${!showBtn && "invisible" } shadow-[0px_4px_8px_1px_rgba(0,0,0,0.25)] focus:bg-[#FFBA20] lg:hover:bg-[#FFBA20]`} onClick={handleSubmit}>Enter</button> */}
+            <GeneralBtn showBtn={showBtn} handleClick={handleSubmit} />
           </div>
         </div>
       </section>
