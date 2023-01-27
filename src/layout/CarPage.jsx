@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import BodyBg from '../components/BodyBg'
 import Select from "react-select"
 import GeneralBtn from '../components/GeneralBtn'
@@ -67,20 +67,20 @@ const CustomSelect = ({options, defaultValue, selectedOption, handleChange, disa
 const BASE_URL = 'https://drcarquotes.azurewebsites.net'
 
 const CarPage = () => {
-    const stateValues = [{x: '-120%', opacity: 0}, {x: 0, opacity: 1}]
+    const stateValues = [{x: '200%', opacity: 0}, {x: 0, opacity: 1}]
     const [data, setData] = useState(undefined)
     const [make, setMake] = useState({selected: {}, cars: []})
     const [model, setModel] = useState({selected: {}, cars: []})
     const [year, setYear] = useState({selected: {}, cars: []})
     const [motionState, setMotionState] = useState(stateValues[1])
     const [displayImg, setDisplayImg] = useState(null)
+    const navigate = useNavigate()
 
     const { zipcode } = useParams()
 
     const getCarsOutofData = (carsArr) => {
         const makes = []
         const maker = []
-        console.log(carsArr)
         if (carsArr !== undefined) {
             for (const car of carsArr) {
                 if (makes.indexOf(car.make) == -1) {
@@ -92,8 +92,6 @@ const CarPage = () => {
             }
         }
 
-        console.log(makes)
-        console.log(maker)
         return maker
     }
 
@@ -114,7 +112,6 @@ const CarPage = () => {
     const getModelOptions = (carsArr) => {
         const selectedMake = make.selected.value
         const models = []
-        console.log(carsArr)
         if (carsArr !== undefined) {
 
             for (const car of carsArr) {
@@ -123,14 +120,12 @@ const CarPage = () => {
                 }
             }
         }
-        console.log("models", models)
         setModel({selected: models[0], cars: models})
     }
 
     const getYearOptions = (carsArr) => {
         const selectedModel = model.selected?.value
         const years = []
-        console.log(carsArr)
         if (carsArr !== undefined) {
 
             for (const car of carsArr) {
@@ -139,11 +134,11 @@ const CarPage = () => {
                 }
             }
         }
-        console.log("year", years)
         setYear({selected: years[0], cars: years})
     }
     useEffect(() => {
         getCars()
+        // document.getElementById('mg').style.transform = 'scaleX(-1)'
     }, [])
     useEffect(() => {
         setMotionState(stateValues[0])
@@ -167,67 +162,72 @@ const CarPage = () => {
     }, [model.selected, data])
     
 
+    const handleSelect = () => {
+        const carId = data.find(car => car.make === make.selected?.value && car.model === model.selected?.value && car.year === year.selected?.value)?.id
+        navigate(`/${zipcode}/car/${carId}`)
+    }
 
 
   return (
     <BodyBg>
-        <div className='relative min-h-[70vh]'>
-            <div className='flex flex-wrap items-center content-start gap-5 pb-12  z-10 max-w-[1400px] mx-auto mt-[2%]'>
-                <div className='basis-4/4 lg:basis-[35%] z-10'>
-                    <h1 className='text-xl text-black font-Itim mx-4 mb-8'>We kindly ask you to take a moment to provide us with the make, model and year of your car.</h1>
-                    <ul className='flex flex-col w-full items-center  max-w-lg gap-4'>
-                        <li className='w-10/12 mx-auto'>
-                            <p className='ml-8 text-black font-medium text-lg mb-2'>make</p>
+        <h1 className='text-lg text-black font-Itim mb-3 w-10/12 text-center mx-auto lg:text-2xl'>We kindly ask you to take a moment to provide us with the make, model and year of your car.</h1>
+        <div className='flex flex-wrap items-center content-start gap-5 pb-12  z-10 max-w-[1400px] mx-auto mt-[2%]'>
+            <div className='basis-[100%] lg:basis-[35%] z-10'>
+                <ul className='flex flex-col w-full items-center max-w-lg gap-4 mx-auto'>
+                    <li className='w-10/12 mx-auto'>
+                        <p className='ml-8 text-black font-medium text-lg mb-2'>make</p>
+                        <div>
                             <div>
-                                <div>
-                                    {
-                                        make.cars.length > 0 &&
-                                    <CustomSelect options={make.cars} defaultValue={make.selected} selectedOption={make.selected}
-                                        handleChange={(selectedOption)=> setMake((prevState) => ({...prevState, selected: selectedOption}))} />
-                                    }
-                                </div>
+                                {
+                                    make.cars.length > 0 &&
+                                <CustomSelect options={make.cars} defaultValue={make.selected} selectedOption={make.selected}
+                                    handleChange={(selectedOption)=> setMake((prevState) => ({...prevState, selected: selectedOption}))} />
+                                }
                             </div>
-                        </li>
-                        <li className='w-10/12 mx-auto'>
-                            <p className='ml-8 text-black font-medium text-lg mb-2'>model</p>
+                        </div>
+                    </li>
+                    <li className='w-10/12 mx-auto'>
+                        <p className='ml-8 text-black font-medium text-lg mb-2'>model</p>
+                        <div>
                             <div>
-                                <div>
-                                    {
-                                        model.cars.length > 0 &&
-                                    <CustomSelect options={model.cars} defaultValue={model.selected} selectedOption={model.selected} handleChange={(selectedOption)=> setModel((prevState) => ({...prevState, selected: selectedOption}))} />
-                                    }
-                                </div>
+                                {
+                                    model.cars.length > 0 &&
+                                <CustomSelect options={model.cars} defaultValue={model.selected} selectedOption={model.selected} handleChange={(selectedOption)=> setModel((prevState) => ({...prevState, selected: selectedOption}))} />
+                                }
                             </div>
-                        </li>
-                        <li className='w-10/12 mx-auto'>
-                            <p className='ml-8 text-black font-medium text-lg mb-2'>year</p>
+                        </div>
+                    </li>
+                    <li className='w-10/12 mx-auto'>
+                        <p className='ml-8 text-black font-medium text-lg mb-2'>year</p>
+                        <div>
                             <div>
-                                <div>
-                                    {
-                                        year.cars.length > 0 &&
-                                    <CustomSelect options={year.cars} defaultValue={year.selected} selectedOption={year.selected} handleChange={(selectedOption)=> setYear((prevState) => ({...prevState, selected: selectedOption}))} />
-                                    }
-                                </div>
+                                {
+                                    year.cars.length > 0 &&
+                                <CustomSelect options={year.cars} defaultValue={year.selected} selectedOption={year.selected} handleChange={(selectedOption)=> setYear((prevState) => ({...prevState, selected: selectedOption}))} />
+                                }
                             </div>
-                        </li>
-                    </ul>
-                </div>
-                <div className='lg:order-last basis-[100%] z-10 flex justify-center'>
-                    <GeneralBtn showBtn={true} handleClick={()=> {}} />
-                </div>
-                <div className=' w-full z-10 lg:basis-[63%]'>
-                    {/* <div className='absolute left-[-5px] top-[60px] md:top-[6em] z-10 w-[90%] md:w-[27em] lg:w-[30%]'> */}
-                    <div className='w-[90%] max-w-[900px] mx-auto overflow-hidden'>
-                        {
-                            displayImg &&
-                            <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%]' src={displayImg} alt="car img" id="mg" />
-                            // <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%] max-h-[500px]' src={displayImg} alt="car img" id="mg" />
-                        }
-                    </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div className='lg:order-last basis-[100%] z-10 flex justify-center'>
+                <GeneralBtn showBtn={true} handleClick={handleSelect} />
+            </div>
+            <div className=' w-full z-10 lg:basis-[63%]'>
+                {/* <div className='absolute left-[-5px] top-[60px] md:top-[6em] z-10 w-[90%] md:w-[27em] lg:w-[30%]'> */}
+                <div className='w-[90%] max-w-[900px] mx-auto overflow-hidden'>
+                    {
+                        displayImg &&
+                        // <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%]' src={displayImg} alt="car img" id="mg"/>
+                    <motion.div initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }}>
+                        <img className='w-[100%]' src={displayImg} alt="car img" style={{transform: 'scaleX(-1)'}}/>
+                    </motion.div>
+                        // <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%] max-h-[500px]' src={displayImg} alt="car img" id="mg" />
+                    }
                 </div>
             </div>
-            <div className='min-h-[200px] md:min-h-[350px] bg-gradient-to-b from-[#d9e1e9] to-[#a5a2a2] w-full absolute bottom-0'></div>
         </div>
+        <div className='min-h-[200px] md:min-h-[350px] bg-gradient-to-b from-[#d9e1e9] to-[#a5a2a2] w-full absolute bottom-0'></div>
     </BodyBg>
   )
 }

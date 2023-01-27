@@ -30,7 +30,7 @@ const LandingPage = () => {
   return (
     <div>
       <section className="hero bg-[#EFF7FF] px-2 pt-4 pb-12">
-        <Header />
+        <Header useText={true} />
         <div className='flex flex-col items-center md:grid md:grid-cols-4 md:grid-rows-4 gap-2 mt-4 max-w-6xl mx-auto'>
           <h2 className='md:row-start-1 md:row-span-2 md:col-span-2 font-Itim text-2xl lg:text-4xl text-center text-black'>
             Stop overpaying.<br/>Find the best auto<br/> repair deals.

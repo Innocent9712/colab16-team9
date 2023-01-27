@@ -4,6 +4,7 @@ import Header from './components/Header'
 import { Route, Routes } from 'react-router-dom'
 import LandingPage from './layout/LandingPage'
 import CarPage from './layout/CarPage'
+import ProblemPage from './layout/ProblemPage'
 
 const paramObject = {
   state: {},
@@ -21,6 +22,7 @@ function App() {
           <Routes>
             <Route path='/' element={<LandingPage />} />
             <Route path='/:zipcode/car' element={<CarPage />} />
+            <Route path='/:zipcode/car/:carId' element={<ProblemPage />} />
           </Routes>
         </appContext.Provider>
     </div>
