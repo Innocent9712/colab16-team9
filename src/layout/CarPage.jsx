@@ -60,7 +60,8 @@ const CustomSelect = ({options, defaultValue, handleChange, disabledState = fals
     )
 }
 
-const BASE_URL = 'http://drcarquotes01-001-site1.btempurl.com'
+// const BASE_URL = 'https://drcarquotes01-001-site1.btempurl.com'
+const BASE_URL = 'https://drcarquotes.azurewebsites.net'
 
 const CarPage = () => {
     const [data, setData] = useState(undefined)
@@ -70,11 +71,6 @@ const CarPage = () => {
     const [displayImg, setDisplayImg] = useState(null)
 
     const { zipcode } = useParams()
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ]
 
     const getCarsOutofData = (carsArr) => {
         const makes = []
