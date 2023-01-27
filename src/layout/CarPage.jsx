@@ -4,6 +4,7 @@ import BodyBg from '../components/BodyBg'
 import Select from "react-select"
 import GeneralBtn from '../components/GeneralBtn'
 import axios from 'axios'
+import {motion} from 'framer-motion'
 
 const CustomSelect = ({options, defaultValue, handleChange, disabledState = false}) => {
     return (
@@ -64,10 +65,12 @@ const CustomSelect = ({options, defaultValue, handleChange, disabledState = fals
 const BASE_URL = 'https://drcarquotes.azurewebsites.net'
 
 const CarPage = () => {
+    const stateValues = [{x: '-120%', opacity: 0}, {x: 0, opacity: 1}]
     const [data, setData] = useState(undefined)
     const [make, setMake] = useState({selected: {}, cars: []})
     const [model, setModel] = useState({selected: {}, cars: []})
     const [year, setYear] = useState({selected: {}, cars: []})
+    const [motionState, setMotionState] = useState(stateValues[1])
     const [displayImg, setDisplayImg] = useState(null)
 
     const { zipcode } = useParams()
@@ -141,11 +144,19 @@ const CarPage = () => {
         getCars()
     }, [])
     useEffect(() => {
-        setDisplayImg(data?.find(car => car.make === make.selected?.value && car.model === model.selected?.value && car.year === year.selected?.value)?.imageUrl)
-    }, [year.selected])
+        setMotionState(stateValues[0])
+        setTimeout(() => {
+            setMotionState(stateValues[1])
+        }, 1000)
+        setTimeout(() => {
+            setDisplayImg(data?.find(car => car.make === make.selected?.value && car.model === model.selected?.value && car.year === year.selected?.value)?.imageUrl)            
+        }, 1000);
 
-    console.log("display", displayImg)
-    console.log("data", data)
+    }, [year.selected])
+    
+
+    // console.log("display", displayImg)
+    // console.log("data", data)
     useEffect(() => {
         getModelOptions(data)
     }, [make.selected, data])
@@ -204,10 +215,10 @@ const CarPage = () => {
                 </div>
                 <div className=' w-full z-10 lg:basis-[63%]'>
                     {/* <div className='absolute left-[-5px] top-[60px] md:top-[6em] z-10 w-[90%] md:w-[27em] lg:w-[30%]'> */}
-                    <div className='w-[90%] max-w-[900px] mx-auto'>
+                    <div className='w-[90%] max-w-[900px] mx-auto overflow-hidden'>
                         {
                             displayImg &&
-                            <img className='w-[100%] max-h-[500px]' src={displayImg} alt="car img" />
+                            <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%] max-h-[500px]' src={displayImg} alt="car img" id="mg" />
                         }
                     </div>
                 </div>
