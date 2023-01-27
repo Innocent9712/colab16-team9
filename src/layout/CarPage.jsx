@@ -6,13 +6,15 @@ import GeneralBtn from '../components/GeneralBtn'
 import axios from 'axios'
 import {motion} from 'framer-motion'
 
-const CustomSelect = ({options, defaultValue, handleChange, disabledState = false}) => {
+const CustomSelect = ({options, defaultValue, selectedOption, handleChange, disabledState = false}) => {
     return (
         <Select
         options={options}
         defaultValue={defaultValue}
         onChange={handleChange} 
         isDisabled={disabledState}
+        value={selectedOption}
+        // selectedOption={selectedOption}
         styles={{
             container: (baseStyles, state) => ({
                 ...baseStyles,
@@ -172,7 +174,7 @@ const CarPage = () => {
         <div className='relative min-h-[70vh]'>
             <div className='flex flex-wrap items-center content-start gap-5 pb-12  z-10 max-w-[1400px] mx-auto mt-[2%]'>
                 <div className='basis-4/4 lg:basis-[35%] z-10'>
-                    <h1 className='text-xl text-black font-Itim'>We kindly ask you to take a moment to provide us with the make, model and year of your car.</h1>
+                    <h1 className='text-xl text-black font-Itim mx-4 mb-8'>We kindly ask you to take a moment to provide us with the make, model and year of your car.</h1>
                     <ul className='flex flex-col w-full items-center  max-w-lg gap-4'>
                         <li className='w-10/12 mx-auto'>
                             <p className='ml-8 text-black font-medium text-lg mb-2'>make</p>
@@ -180,7 +182,7 @@ const CarPage = () => {
                                 <div>
                                     {
                                         make.cars.length > 0 &&
-                                    <CustomSelect options={make.cars} defaultValue={make.selected} 
+                                    <CustomSelect options={make.cars} defaultValue={make.selected} selectedOption={make.selected}
                                         handleChange={(selectedOption)=> setMake((prevState) => ({...prevState, selected: selectedOption}))} />
                                     }
                                 </div>
@@ -192,7 +194,7 @@ const CarPage = () => {
                                 <div>
                                     {
                                         model.cars.length > 0 &&
-                                    <CustomSelect options={model.cars} defaultValue={model.selected} handleChange={(selectedOption)=> console.log(selectedOption)} />
+                                    <CustomSelect options={model.cars} defaultValue={model.selected} selectedOption={model.selected} handleChange={(selectedOption)=> setModel((prevState) => ({...prevState, selected: selectedOption}))} />
                                     }
                                 </div>
                             </div>
@@ -203,7 +205,7 @@ const CarPage = () => {
                                 <div>
                                     {
                                         year.cars.length > 0 &&
-                                    <CustomSelect options={year.cars} defaultValue={year.selected} handleChange={(selectedOption)=> console.log(selectedOption)} />
+                                    <CustomSelect options={year.cars} defaultValue={year.selected} selectedOption={year.selected} handleChange={(selectedOption)=> setYear((prevState) => ({...prevState, selected: selectedOption}))} />
                                     }
                                 </div>
                             </div>
@@ -218,7 +220,8 @@ const CarPage = () => {
                     <div className='w-[90%] max-w-[900px] mx-auto overflow-hidden'>
                         {
                             displayImg &&
-                            <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%] max-h-[500px]' src={displayImg} alt="car img" id="mg" />
+                            <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%]' src={displayImg} alt="car img" id="mg" />
+                            // <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%] max-h-[500px]' src={displayImg} alt="car img" id="mg" />
                         }
                     </div>
                 </div>

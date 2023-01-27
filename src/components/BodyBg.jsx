@@ -6,7 +6,7 @@ import Header from './Header'
 const BodyBg = ({children}) => {
   return (
     <div>
-        <section className='bg-cover bg-center min-h-full lg:bg-[center_bottom_1rem]' style={{backgroundImage: `url("${bg_image}")`}}>
+        <section className='bg-cover bg-center min-h-full lg:bg-[center_bottom_1rem]' style={{backgroundImage: `url("${bg_image}")`, boxShadow: 'inset 0 0 0 2000px rgba(255,246, 175, 0.6)'}}>
             <div className='bg-[#c5c5c5ad]'>
               <div className='px-4 py-3'>
                 <Header />
