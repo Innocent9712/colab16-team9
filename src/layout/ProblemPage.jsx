@@ -113,7 +113,7 @@ const ProblemPage = () => {
     console.log(car)
   return (
     <BodyBg>
-        <h1 className='text-lg text-black font-Itim mb-3 w-10/12 text-center mx-auto lg:text-2xl'>Select repair</h1>
+        <h1 className='text-xl text-black font-Itim mb-8  w-10/12 text-center mx-auto lg:text-3xl'>Select repair</h1>
         <div className='flex flex-wrap items-center content-start gap-5 pb-12 z-10 max-w-[1400px] mx-auto mt-[2%]'>
             <div className='flex flex-col justify-between gap-2 z-10 lg:flex-row'>
               <div className='mb-7 lg:mb-0'>
@@ -121,7 +121,7 @@ const ProblemPage = () => {
                     {
                       problems.map((problem) => (
                         <motion.li whileHover={{scale: 1.2}}  key={problem.id} className="flex basis-full lg:basis-[31%] items-center border-2 border-neutral-600 rounded-full px-3 py-1 hover:cursor-pointer bg-[#D9D9D9] hover:bg-[#FFC43A] min-h-[70px]" onClick={() => handleSelect(problem.id)}>
-                          <p className='basis-[70%] text-center text-black'>{problem.text}</p>
+                          <p className='basis-[70%] text-center text-black font-Inter'>{problem.text}</p>
                           <div className='basis-[30%]'>
                             <img className='w-[50px] lg:w-[60px]' src={problem.img} alt={problem.text} />
                           </div>
@@ -134,7 +134,7 @@ const ProblemPage = () => {
                 {
                   car &&
                   <>
-                    <p className='text-center mb-3 text-black'>{`${car.make} ${car.model} ${car.year}`}</p>
+                    <p className='text-center mb-3 text-black font-bold font-Inter'>{`${car.make} ${car.model} ${car.year}`}</p>
                     <img src={car.imageUrl} alt="car image" style={{transform: 'scaleX(-1)'}} />
                   </>
                 }
