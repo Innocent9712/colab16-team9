@@ -6,6 +6,7 @@ import LandingPage from './layout/LandingPage'
 import CarPage from './layout/CarPage'
 import ProblemPage from './layout/ProblemPage'
 import QoutesPage from './layout/QoutesPage'
+import MechanicDetails from './layout/MechanicDetails'
 
 const paramObject = {
   state: {},
@@ -25,6 +26,7 @@ function App() {
             <Route path='/:zipcode/car' element={<CarPage />} />
             <Route path='/:zipcode/car/:carId' element={<ProblemPage />} />
             <Route path='/:zipcode/car/:carId/repair/:repairId' element={<QoutesPage />} />
+            <Route path='/:zipcode/car/:carId/repair/:repairId/quote/:quoteId' element={<MechanicDetails />} />
           </Routes>
         </appContext.Provider>
     </div>

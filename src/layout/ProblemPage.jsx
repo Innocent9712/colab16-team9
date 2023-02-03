@@ -120,11 +120,13 @@ const ProblemPage = () => {
                 <ul className='flex flex-wrap gap-3 lg:gap-4 mx-3 lg:mx-0'>
                     {
                       problems.map((problem) => (
-                        <motion.li whileHover={{scale: 1.2}}  key={problem.id} className="flex basis-full lg:basis-[31%] items-center border-2 border-neutral-600 rounded-full px-3 py-1 hover:cursor-pointer bg-[#D9D9D9] hover:bg-[#FFC43A] min-h-[70px]" onClick={() => handleSelect(problem.id)}>
-                          <p className='basis-[70%] text-center text-black font-Inter'>{problem.text}</p>
-                          <div className='basis-[30%]'>
-                            <img className='w-[50px] lg:w-[60px]' src={problem.img} alt={problem.text} />
-                          </div>
+                        <motion.li whileHover={{scale: 1.2}}  key={problem.id}  onClick={() => handleSelect(problem.id)} className="flex basis-full lg:basis-[31%] ">
+                          <button className="flex w-full items-center border-2 border-neutral-600 rounded-full px-3 py-1 hover:cursor-pointer bg-[#D9D9D9] hover:bg-[#FFC43A] min-h-[70px]">
+                            <p className='basis-[70%] text-center text-black font-Inter'>{problem.text}</p>
+                            <div className='basis-[30%]'>
+                              <img className='w-[50px] lg:w-[60px]' src={problem.img} alt={problem.text} />
+                            </div>
+                          </button>
                         </motion.li>
                       ))
                     }
