@@ -41,7 +41,6 @@ const ProblemPage = () => {
         img: wiper_blade
       }
     ])
-    console.log(zipcode, carId)
     const navigate = useNavigate()
     const getCar = async () => {
       const cars = await axios.get(`${BASE_URL}/api/cars/${carId}`)
@@ -75,9 +74,7 @@ const ProblemPage = () => {
     
 
     const getProblems = async () => {
-      // const problems = await axios.get(`${BASE_URL}/api/quotes/get-best-quotes?zipCode=1&repairServiceId=1&carId=1`)
       const problems = await axios.get(`${BASE_URL}/api/repairservices/get-all-repairservices`)
-      console.log(problems)
       setProblems(preState => {
         let tempArr = []
         for (let i = 0; i < preState.length; i++) {
@@ -85,7 +82,6 @@ const ProblemPage = () => {
           let curr_index = 0
           for (let j = 0; j < problems.data.length; j++) {
             const w = levenshteinDistance(preState[i].text, problems.data[j].name)
-            // console.log(w)
             if (w < val) {
               val = w
               curr_index = j
@@ -95,7 +91,6 @@ const ProblemPage = () => {
           tempArr.push({text: preState[i].text, img: preState[i].img, id: problems.data[curr_index].id})
           
         }
-        // console.log(tempArr)
         return tempArr
       })
     }
@@ -110,7 +105,6 @@ const ProblemPage = () => {
       getCar()
       getProblems()
     }, [])
-    console.log(car)
   return (
     <BodyBg>
         <h1 className='text-xl text-black font-Itim mb-8  w-10/12 text-center mx-auto lg:text-3xl'>Select repair</h1>
@@ -119,8 +113,8 @@ const ProblemPage = () => {
               <div className='mb-7 lg:mb-0'>
                 <ul className='flex flex-wrap gap-3 lg:gap-4 mx-3 lg:mx-0'>
                     {
-                      problems.map((problem) => (
-                        <motion.li whileHover={{scale: 1.2}}  key={problem.id}  onClick={() => handleSelect(problem.id)} className="flex basis-full lg:basis-[31%] ">
+                      problems.map((problem, index) => (
+                        <motion.li whileHover={{scale: 1.2}}  key={index}  onClick={() => handleSelect(problem.id)} className="flex basis-full lg:basis-[31%] ">
                           <button className="flex w-full items-center border-2 border-neutral-600 rounded-full px-3 py-1 hover:cursor-pointer bg-[#D9D9D9] hover:bg-[#FFC43A] min-h-[70px]">
                             <p className='basis-[70%] text-center text-black font-Inter'>{problem.text}</p>
                             <div className='basis-[30%]'>

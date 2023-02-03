@@ -10,7 +10,6 @@ const MechanicDetails = () => {
     const [car, setCar] = useState(undefined)
     const [mechanic, setMechanic] = useState(undefined)
     const {zipcode, carId, repairId, quoteId} = useParams()
-    console.log(zipcode, carId, repairId, quoteId)
 
     const getCar = async () => {
         const car = await axios.get(`${BASE_URL}/api/cars/${carId}`)
@@ -19,7 +18,6 @@ const MechanicDetails = () => {
 
     const getMechanic = async () => {
         const data = await axios.get(`${BASE_URL}/api/quotes/${quoteId}`)
-        console.log(data.data)
         setMechanic(data.data)
     }
 
@@ -38,7 +36,7 @@ const MechanicDetails = () => {
             </div>
             <div className='flex flex-col justify-between gap-2 z-10 lg:flex-row basis-[100%]'>
                 <div className='min-h-[300px] lg:basis-[45%] lg:order-1'>
-                    <div className='bg-[#D9D9D9] rounded-lg shadow-2xl p-4 text-center font-Inter font-extrabold mx-4'>
+                    <div className='bg-[#D9D9D9] rounded-lg shadow-2xl p-4 text-center font-Inter font-extrabold mx-4 text-black'>
                         {
                             mechanic && 
                             <>

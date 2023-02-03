@@ -100,7 +100,6 @@ const CarPage = () => {
         setData(cars.data)
         setMake(() => {
             const res = getCarsOutofData(cars.data)
-            // console.log("res", res)
             return {
                 selected: res[0],
                 cars: res
@@ -138,7 +137,6 @@ const CarPage = () => {
     }
     useEffect(() => {
         getCars()
-        // document.getElementById('mg').style.transform = 'scaleX(-1)'
     }, [])
     useEffect(() => {
         setMotionState(stateValues[0])
@@ -152,8 +150,6 @@ const CarPage = () => {
     }, [year.selected])
     
 
-    // console.log("display", displayImg)
-    // console.log("data", data)
     useEffect(() => {
         getModelOptions(data)
     }, [make.selected, data])
@@ -214,7 +210,6 @@ const CarPage = () => {
                 <GeneralBtn showBtn={true} handleClick={handleSelect} text={"Next"} />
             </div>
             <div className=' w-full z-10 lg:basis-[63%] lg:flex lg:justify-end'>
-                {/* <div className='absolute left-[-5px] top-[60px] md:top-[6em] z-10 w-[90%] md:w-[27em] lg:w-[30%]'> */}
                 <div className='w-[90%] max-w-[800px] mx-auto overflow-hidden'>
                     {
                         (make.selected && model.selected && year.selected) &&
@@ -222,11 +217,9 @@ const CarPage = () => {
                     }
                     {
                         displayImg &&
-                        // <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%]' src={displayImg} alt="car img" id="mg"/>
                     <motion.div initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }}>
                         <img className='w-[100%]' src={displayImg} alt="car img" style={{transform: 'scaleX(-1)'}}/>
                     </motion.div>
-                        // <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%] max-h-[500px]' src={displayImg} alt="car img" id="mg" />
                     }
                 </div>
             </div>
@@ -237,50 +230,3 @@ const CarPage = () => {
 }
 
 export default CarPage
-{/* <Select
-    options={options}
-    defaultValue={options[1]}
-    onChange={(selectedOption)=> console.log(selectedOption)} 
-    styles={{
-        container: (baseStyles, state) => ({
-            ...baseStyles,
-            width: '80%',
-            maxWidth: '400px'
-        }),
-        control: (baseStyles, state) => ({
-        ...baseStyles,
-        borderColor: state.isFocused ? '#FFC43A' : '#141313',
-        borderRadius: '2rem',
-        borderWidth: '3px',
-        padding: '3px'
-        }),
-        input: (baseStyles, state) => ({
-        ...baseStyles,
-        outline: 'none',
-            ':focus': {
-                outline: 'none'
-            }
-        }),
-
-        option: (baseStyles, state) => ({
-        ...baseStyles,
-        padding: '3px',
-        color: '#141413'
-        }),
-
-        optionHover: (baseStyles, state) => ({
-        ...baseStyles,
-        backgroundColor: state.isFocused? '#f8f9fa' : '#141313'
-        }),
-
-        optionSelected: (baseStyles, state) => ({
-        ...baseStyles,
-        backgroundColor: state.isFocused? '#FFC43A' : '#141313'
-        }),
-
-        optionSelectedHover: (baseStyles, state) => ({
-        ...baseStyles,
-        backgroundColor: state.isFocused? '#FFC43A' : '#141313'
-        }),
-    }}
-/> */}
