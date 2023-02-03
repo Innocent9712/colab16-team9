@@ -33,7 +33,7 @@ const MechanicDetails = () => {
         <div className='flex flex-wrap items-center content-start gap-5 pb-12 z-10 max-w-[1400px] mx-auto mt-[2%]'>
             <div className='basis-[100%] mb-24'>
                 <button className='bg-[#FFC43A] text-black mx-auto block'>
-                    <a href={`tel:09066918498`} className="block">Connect Now</a>
+                    <a href={`tel:${mechanic?.mechanic.phone}`} className="block">Connect Now</a>
                 </button>
             </div>
             <div className='flex flex-col justify-between gap-2 z-10 lg:flex-row basis-[100%]'>
