@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom'
 import LandingPage from './layout/LandingPage'
 import CarPage from './layout/CarPage'
 import ProblemPage from './layout/ProblemPage'
+import QoutesPage from './layout/QoutesPage'
 
 const paramObject = {
   state: {},
@@ -23,6 +24,7 @@ function App() {
             <Route path='/' element={<LandingPage />} />
             <Route path='/:zipcode/car' element={<CarPage />} />
             <Route path='/:zipcode/car/:carId' element={<ProblemPage />} />
+            <Route path='/:zipcode/car/:carId/repair/:repairId' element={<QoutesPage />} />
           </Routes>
         </appContext.Provider>
     </div>

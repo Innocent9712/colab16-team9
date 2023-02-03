@@ -18,7 +18,7 @@ const Footer = () => {
                 </a>
             </li>
         </ul>
-        <p className='text-white'>© Copyright 2023 Dr. CarQuotes. All rights reserved.</p>
+        <p className='text-white text-center'>© Copyright 2023 Dr. CarQuotes. All rights reserved.</p>
     </footer>
   )
 }

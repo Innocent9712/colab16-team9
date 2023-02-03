@@ -64,7 +64,7 @@ const CustomSelect = ({options, defaultValue, selectedOption, handleChange, disa
 }
 
 // const BASE_URL = 'https://drcarquotes01-001-site1.btempurl.com'
-const BASE_URL = 'https://drcarquotes.azurewebsites.net'
+export const BASE_URL = 'https://drcarquotes.azurewebsites.net'
 
 const CarPage = () => {
     const stateValues = [{x: '200%', opacity: 0}, {x: 0, opacity: 1}]
@@ -172,7 +172,7 @@ const CarPage = () => {
     <BodyBg>
         <h1 className='text-lg text-black font-Itim mb-3 w-10/12 text-center mx-auto lg:text-2xl'>We kindly ask you to take a moment to provide us with the make, model and year of your car.</h1>
         <div className='flex flex-wrap items-center content-start gap-5 pb-12  z-10 max-w-[1400px] mx-auto mt-[2%]'>
-            <div className='basis-[100%] lg:basis-[35%] z-10'>
+            <div className='basis-[100%] lg:basis-[35%] z-20'>
                 <ul className='flex flex-col w-full items-center max-w-lg gap-4 mx-auto'>
                     <li className='w-10/12 mx-auto'>
                         <p className='ml-8 text-black font-medium text-lg mb-2'>make</p>
@@ -211,11 +211,15 @@ const CarPage = () => {
                 </ul>
             </div>
             <div className='lg:order-last basis-[100%] z-10 flex justify-center'>
-                <GeneralBtn showBtn={true} handleClick={handleSelect} />
+                <GeneralBtn showBtn={true} handleClick={handleSelect} text={"Next"} />
             </div>
-            <div className=' w-full z-10 lg:basis-[63%]'>
+            <div className=' w-full z-10 lg:basis-[63%] lg:flex lg:justify-end'>
                 {/* <div className='absolute left-[-5px] top-[60px] md:top-[6em] z-10 w-[90%] md:w-[27em] lg:w-[30%]'> */}
-                <div className='w-[90%] max-w-[900px] mx-auto overflow-hidden'>
+                <div className='w-[90%] max-w-[800px] mx-auto overflow-hidden'>
+                    {
+                        (make.selected && model.selected && year.selected) &&
+                        <p className='text-center text-black font-semibold lg:text-2xl mb-4'>{`${make.selected.value} ${model.selected.value} ${year.selected.value}`}</p>
+                    }
                     {
                         displayImg &&
                         // <motion.img initial={stateValues[0]} animate={motionState} transition={{ duration: 1.5 }} className='w-[100%]' src={displayImg} alt="car img" id="mg"/>
@@ -227,7 +231,7 @@ const CarPage = () => {
                 </div>
             </div>
         </div>
-        <div className='min-h-[200px] md:min-h-[350px] bg-gradient-to-b from-[#d9e1e9] to-[#a5a2a2] w-full absolute bottom-0'></div>
+        <div className='min-h-[200px] md:min-h-[300px] lg:min-h-[450px] bg-gradient-to-b from-[#d9e1e9] to-[#a5a2a2] w-full absolute bottom-0'></div>
     </BodyBg>
   )
 }
