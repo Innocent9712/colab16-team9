@@ -25,7 +25,7 @@ const QoutesPage = () => {
     }
 
     const getQuotes = async () => {
-        const quotes = await axios.get(`${BASE_URL}/api/quotes/get-best-quotes?zipCode=${20374}&repairServiceId=${repairId}&carId=${carId}`)
+        const quotes = await axios.get(`${BASE_URL}/api/quotes/get-best-quotes?zipCode=${zipcode}&repairServiceId=${repairId}&carId=${carId}`)
         setQuotes(quotes.data)
     }
 
@@ -45,8 +45,9 @@ const QoutesPage = () => {
         getPart = num + Number(getPart)
         return Math.round((getPart + Number.EPSILON) * 100) / 100
     }
-  return (
-    <BodyBg>
+
+    return (
+    <BodyBg currPage={4}>
         <div className=''>
             <div className='w-[90%] max-w-md mx-auto'>
                 {
@@ -56,7 +57,7 @@ const QoutesPage = () => {
                             <div className=' bg-[#FFC43A] px-2 py-4 shadow-lg rounded-xl font-Inter font-extrabold text-black'>
                                 <h3 className='text-center'>Estimated Price Range</h3>
                                 {
-                                    quotes &&
+                                    quotes && quotes.length > 0 &&
                                     <p className='text-center'>{`$${quotes[0].price} - ${generateHighest(quotes[2].price)}`}</p>
                                 }
                             </div>
@@ -74,31 +75,34 @@ const QoutesPage = () => {
                     </div>
                 </MediaQuery>
                 {
-                    quotes ? (
-                        <ul className='flex flex-col gap-4 lg:relative lg:flex-row z-10 lg:items-start'>
-                            {
-                                quotes.map((quote, index) => (                        
-                                <li  key={index} onClick={() => handleSelect(quote.id)}>
-                                    <button className='w-full text-Inter text-xl font-extrabold border-4 rounded-2xl border-neutral-600 bg-[#D9D9D9] p-4 text-center text-black hover:border-[#FFC43A]'>
-                                        <h3>{quote.mechanic.name}</h3>
-                                        <h3>${quote.price}</h3>
-                                    </button>
-                                </li>
-                                ))
-                            }
-                            <MediaQuery minWidth={1024}>
-                                <li className="absolute bottom-0 w-full h-[250px]">
-                                    <img src={location} alt="location" className='w-full h-[250px]' />
-                                </li>
-                            </MediaQuery>
-                        </ul>
-
-                    ) : (
-                        <div className='min-h-[500px] flex justify-center items-center z-10 font-Itim'>
-                            <div>
-                                <p className='text-2xl text-center text-black'>Sorry, No mechanics offer this service near you.</p>
+                    quotes && (
+                        quotes.length > 0 ? (
+                            <ul className='flex flex-col gap-4 lg:relative lg:flex-row z-10 lg:items-start'>
+                                {
+                                    quotes.map((quote, index) => (                        
+                                    <li  key={index} onClick={() => handleSelect(quote.id)}>
+                                        <button className='w-full text-Inter text-xl font-extrabold border-4 rounded-2xl border-neutral-600 bg-[#D9D9D9] p-4 text-center text-black hover:border-[#FFC43A]'>
+                                            <h3>{quote.mechanic.name}</h3>
+                                            <h3>${quote.price}</h3>
+                                        </button>
+                                    </li>
+                                    ))
+                                }
+                                <MediaQuery minWidth={1024}>
+                                    <li className="absolute bottom-0 w-full h-[250px]">
+                                        <img src={location} alt="location" className='w-full h-[250px]' />
+                                    </li>
+                                </MediaQuery>
+                            </ul>
+    
+                        ) : (
+                            <div className='min-h-[500px] flex justify-center items-center z-10 font-Itim'>
+                                <div>
+                                    <p className='text-2xl text-center text-black'>Sorry, No mechanics offer this service near you.</p>
+                                </div>
                             </div>
-                        </div>
+                        )
+
                     )
                 }
             </div>

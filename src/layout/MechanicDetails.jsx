@@ -27,7 +27,7 @@ const MechanicDetails = () => {
     },[])
 
   return (
-    <BodyBg>
+    <BodyBg currPage={5}>
         <div className='flex flex-wrap items-center content-start gap-5 pb-12 z-10 max-w-[1400px] mx-auto mt-[2%]'>
             <div className='basis-[100%] mb-24'>
                 <button className='bg-[#FFC43A] text-black mx-auto block'>

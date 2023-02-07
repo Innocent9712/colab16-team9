@@ -106,7 +106,7 @@ const ProblemPage = () => {
       getProblems()
     }, [])
   return (
-    <BodyBg>
+    <BodyBg currPage={3}>
         <h1 className='text-xl text-black font-Itim mb-8  w-10/12 text-center mx-auto lg:text-3xl'>Select repair</h1>
         <div className='flex flex-wrap items-center content-start gap-5 pb-12 z-10 max-w-[1400px] mx-auto mt-[2%]'>
             <div className='flex flex-col justify-between gap-2 z-10 lg:flex-row'>

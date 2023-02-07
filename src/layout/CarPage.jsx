@@ -165,7 +165,7 @@ const CarPage = () => {
 
 
   return (
-    <BodyBg>
+    <BodyBg currPage={2}>
         <h1 className='text-lg text-black font-Itim mb-3 w-10/12 text-center mx-auto lg:text-2xl'>We kindly ask you to take a moment to provide us with the make, model and year of your car.</h1>
         <div className='flex flex-wrap items-center content-start gap-5 pb-12  z-10 max-w-[1400px] mx-auto mt-[2%]'>
             <div className='basis-[100%] lg:basis-[35%] z-20'>
