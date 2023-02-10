@@ -5,6 +5,7 @@ import BodyBg from '../components/BodyBg'
 import { BASE_URL } from './CarPage'
 import MediaQuery from 'react-responsive'
 import location from "../assets/map.png"
+import no_data from "../assets/no_data.png"
 
 
 const QoutesPage = () => {
@@ -98,7 +99,8 @@ const QoutesPage = () => {
                         ) : (
                             <div className='min-h-[500px] flex justify-center items-center z-10 font-Itim'>
                                 <div>
-                                    <p className='text-2xl text-center text-black'>Sorry, No mechanics offer this service near you.</p>
+                                    {/* <p className='text-2xl text-center text-black'>Sorry, No mechanics offer this service near you.</p> */}
+                                    <img src={no_data} alt="No data" />
                                 </div>
                             </div>
                         )

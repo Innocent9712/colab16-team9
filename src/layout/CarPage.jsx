@@ -14,7 +14,6 @@ const CustomSelect = ({options, defaultValue, selectedOption, handleChange, disa
         onChange={handleChange} 
         isDisabled={disabledState}
         value={selectedOption}
-        // selectedOption={selectedOption}
         styles={{
             container: (baseStyles, state) => ({
                 ...baseStyles,
@@ -135,6 +134,7 @@ const CarPage = () => {
         }
         setYear({selected: years[0], cars: years})
     }
+
     useEffect(() => {
         getCars()
     }, [])
@@ -142,14 +142,13 @@ const CarPage = () => {
         setMotionState(stateValues[0])
         setTimeout(() => {
             setMotionState(stateValues[1])
-        }, 1000)
+        }, 1500)
         setTimeout(() => {
             setDisplayImg(data?.find(car => car.make === make.selected?.value && car.model === model.selected?.value && car.year === year.selected?.value)?.imageUrl)            
-        }, 1000);
+        }, 1500);
 
     }, [year.selected])
     
-
     useEffect(() => {
         getModelOptions(data)
     }, [make.selected, data])
